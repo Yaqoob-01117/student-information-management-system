@@ -1,9 +1,7 @@
 #include<stdio.h>
-
 int main() {
 int choice;
 Student student;
-
     do
     {
     printf("1. Add Student\n");
@@ -20,10 +18,8 @@ Student student;
     printf("0. Exit\n");
     printf("Enter your choice: ");
     scanf("%d", &choice);
-
+        
     } while (choice != 0);
-
-    
 
     return 0;
 }

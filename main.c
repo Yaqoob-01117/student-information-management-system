@@ -1,7 +1,6 @@
 #include<stdio.h>
 int main() {
-int choice;
-Student student;
+int choice;
     do
     {
     printf("1. Add Student\n");

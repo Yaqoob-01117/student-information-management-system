@@ -1,6 +1,7 @@
 #include<stdio.h>
 int main() {
-int choice;
+int choice;
+
     do
     {
     printf("1. Add Student\n");
@@ -17,6 +18,48 @@ int choice;
     printf("0. Exit\n");
     printf("Enter your choice: ");
     scanf("%d", &choice);
+
+         switch(choice) {
+        case 1:
+            Add_Student(&student);
+            break;
+        case 2:
+           view_all_students(student);
+            break;
+        case 3:
+          
+            break;
+        case 4:
+          
+            break;
+        case 5:
+           
+            break;
+        case 6:
+          
+            break;
+        case 7:
+          
+            break;
+        case 8:
+          
+            break;
+        case 9:
+          
+            break;
+        case 10:
+          
+            break;
+        case 11:
+         
+            break;
+        case 0:
+            printf("Exiting the program.\n");
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
+    }
+
         
     } while (choice != 0);
 

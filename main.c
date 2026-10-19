@@ -1,4 +1,109 @@
 #include<stdio.h>
+
+#include<string.h>
+#include<stdlib.h>
+
+
+typedef struct student_information{
+
+    int student_id;
+    int roll_number;
+    char full_name[100];
+    char father_name[100];
+    int age;
+    char gender[10];
+  unsigned long contact_number;
+    char address[200];
+    char class_name[50];
+    char group_name[50];
+    int academic_year;
+   
+}Student;
+
+void Add_Student(Student* student_data) {
+    int capacity=2;
+    int count=0;
+    if(count==capacity){
+        capacity=capacity*2;
+    }
+     student_data=malloc(capacity*sizeof(struct student_information));
+    int group;
+printf("Enter Student ID : ");
+scanf("%d",&student_data->student_id);
+
+printf("Enter Roll Number : ");
+scanf("%d",&student_data->roll_number);
+
+printf("Enter Full Name : ");
+scanf("%s",&student_data->full_name);
+
+printf("Enter Father Name : ");
+scanf("%s",&student_data->father_name);
+
+printf("Enter age : ");
+scanf("%d",&student_data->age);
+
+printf("Enter gender : ");
+scanf("%s",&student_data->gender);
+
+printf("Enter Contact Number : ");
+scanf("%lu",&student_data->contact_number);
+
+printf("Enter adress : ");
+scanf("%s",&student_data->address);
+
+printf("Enter class : ");
+scanf("%s",&student_data->class_name);
+
+printf("Enter acedemic year : ");
+scanf("%d",&student_data->academic_year);
+do{
+printf("================================\n");
+printf("     Academic Disciplines     \n");
+printf("================================\n");
+
+printf("1. Pre-Medical           \n");       
+printf("2. Pre-Engineering       \n");            
+printf("3. Computer Science\n");       
+printf("4. Commerce              \n");   
+printf("5. Humanities            \n");   
+printf("Enter group : ");
+scanf("%d",&group)  ;
+switch (group)
+{
+case 1:
+strcpy(student_data->group_name,"Pre-Medical");
+ break;
+ 
+case 2:
+strcpy(student_data->group_name,"Pre-Engineering");
+ break;
+ 
+case 3:
+strcpy(student_data->group_name,"Computer Science");
+ break;
+ 
+case 4:
+strcpy(student_data->group_name,"Commerce ");
+ break;
+ 
+case 5:
+strcpy(student_data->group_name,"Humanities");
+ break;
+ 
+
+default:
+printf("Invalid Group! Please try again.\n");
+    break;
+}
+
+}while (group>5 || group<1);
+
+
+free(student_data);
+}
+
+
 int main() {
 int choice;
 

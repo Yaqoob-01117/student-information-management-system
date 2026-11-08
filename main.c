@@ -1,5 +1,4 @@
 #include<stdio.h>
-
 #include<string.h>
 #include<stdlib.h>
 
@@ -12,51 +11,90 @@ typedef struct student_information{
     char father_name[100];
     int age;
     char gender[10];
-  unsigned long contact_number;
+    char contact_number[30];
     char address[200];
     char class_name[50];
     char group_name[50];
-    int academic_year;
+    char academic_year[50];
    
 }Student;
 
-void Add_Student(Student* student_data) {
-    int capacity=2;
-    int count=0;
-    if(count==capacity){
-        capacity=capacity*2;
+void Add_Student(Student *student_data,int *capacity,int *count) {
+  
+    if(student_data==NULL){
+        printf("Memory allocation failed!\n");
+        return;
     }
-     student_data=malloc(capacity*sizeof(struct student_information));
+    if(*count==*capacity){
+        *capacity=*capacity*2;
+        student_data=realloc(student_data,(*capacity)*sizeof(struct student_information));
+    }
+     FILE *pf=fopen("Student_data.txt","a");
+    if(pf==NULL){
+        printf("File creating failed!\n");
+        return;
+    }
     int group;
+    int gender;
 printf("Enter Student ID : ");
-scanf("%d",&student_data->student_id);
+scanf("%d",&student_data[*count].student_id);
+
 
 printf("Enter Roll Number : ");
-scanf("%d",&student_data->roll_number);
+scanf("%d",&student_data[*count].roll_number);
 
+while(getchar()!='\n');
 printf("Enter Full Name : ");
-scanf("%s",&student_data->full_name);
+fgets(student_data[*count].full_name,sizeof(student_data[*count].full_name),stdin);
+
 
 printf("Enter Father Name : ");
-scanf("%s",&student_data->father_name);
+fgets(student_data[*count].father_name,sizeof(student_data[*count].father_name),stdin);
 
 printf("Enter age : ");
-scanf("%d",&student_data->age);
-
+scanf("%d",&student_data[*count].age);
+do{
+printf("\nGenders: \n");
+printf("1.Male\n");
+printf("2.Female\n");
+printf("3.Other\n");
 printf("Enter gender : ");
-scanf("%s",&student_data->gender);
+scanf("%d",&gender);
+switch (gender)
+{
+case 1:
+    strcpy(student_data[*count].gender,"Male");
+    break;
 
+    case 2:
+    strcpy(student_data[*count].gender,"Female");
+    break;
+
+    case 3:
+    strcpy(student_data[*count].gender,"Other");
+    break;
+default:
+printf("Invalid Gender! Please try again.");
+    break;
+}
+}while (gender>3 || gender<1);
+
+
+
+while(getchar()!='\n');
 printf("Enter Contact Number : ");
-scanf("%lu",&student_data->contact_number);
+fgets(student_data[*count].contact_number,sizeof(student_data[*count].contact_number),stdin);
+
 
 printf("Enter adress : ");
-scanf("%s",&student_data->address);
+fgets(student_data[*count].address,sizeof(student_data[*count].address),stdin);
 
 printf("Enter class : ");
-scanf("%s",&student_data->class_name);
+fgets(student_data[*count].class_name,sizeof(student_data[*count].class_name),stdin);
+
 
 printf("Enter acedemic year : ");
-scanf("%d",&student_data->academic_year);
+fgets(student_data[*count].academic_year,sizeof(student_data[*count].academic_year),stdin);
 do{
 printf("================================\n");
 printf("     Academic Disciplines     \n");
@@ -68,27 +106,27 @@ printf("3. Computer Science\n");
 printf("4. Commerce              \n");   
 printf("5. Humanities            \n");   
 printf("Enter group : ");
-scanf("%d",&group)  ;
+scanf("%d",&group);
 switch (group)
 {
 case 1:
-strcpy(student_data->group_name,"Pre-Medical");
+strcpy(student_data[*count].group_name,"Pre-Medical");
  break;
  
 case 2:
-strcpy(student_data->group_name,"Pre-Engineering");
+strcpy(student_data[*count].group_name,"Pre-Engineering");
  break;
  
 case 3:
-strcpy(student_data->group_name,"Computer Science");
+strcpy(student_data[*count].group_name,"Computer Science");
  break;
  
 case 4:
-strcpy(student_data->group_name,"Commerce ");
+strcpy(student_data[*count].group_name,"Commerce ");
  break;
  
 case 5:
-strcpy(student_data->group_name,"Humanities");
+strcpy(student_data[*count].group_name,"Humanities");
  break;
  
 
@@ -99,14 +137,57 @@ printf("Invalid Group! Please try again.\n");
 
 }while (group>5 || group<1);
 
+fprintf(pf,"------------------------------------------------------------------------------------------------------------------------\n");
+fprintf(pf,"------------------------------------------------------------------------------------------------------------------------\n");
+fprintf(pf,"Student ID : %d  || ",student_data[*count].student_id);
+fprintf(pf,"Roll No : %d  || ",student_data[*count].roll_number);
+fprintf(pf,"Full Name : %s  || ",student_data[*count].full_name);
+fprintf(pf,"father Name : %s  || ",student_data[*count].father_name);
+fprintf(pf,"Age : %d  || ",student_data[*count].age);
+fprintf(pf,"Gender : %s  || ",student_data[*count].gender);
+fprintf(pf,"Contact No : %s  || ",student_data[*count].contact_number);
+fprintf(pf,"Adress : %s  || ",student_data[*count].address);
+fprintf(pf,"Class : %s  || ",student_data[*count].class_name);
+fprintf(pf,"Group : %s  || ",student_data[*count].group_name);
+fprintf(pf,"Academic year : %s  || ",student_data[*count].academic_year);
 
-free(student_data);
+fprintf(pf,"\n------------------------------------------------------------------------------------------------------------------------\n");
+fprintf(pf,"------------------------------------------------------------------------------------------------------------------------\n");
+(*count)=(*count)+1;
+fprintf(pf,"Total Student : %d",(*count));
+fclose(pf);
+
+
 }
 
+void view_all_students(Student *student_view,int count){
+    for(int i=0;i<count;i++){
+printf("------------------------------------------------------------------------------------------------------------------------\n");
+printf("------------------------------------------------------------------------------------------------------------------------\n");
+printf("Student ID : %d  || ",student_view[i].student_id);
+printf("Roll No : %d  || ",student_view[i].roll_number);
+printf("Full Name : %s  || ",student_view[i].full_name);
+printf("father Name : %s  || ",student_view[i].father_name);
+printf("Age : %d  || ",student_view[i].age);
+printf("Gender : %s  || ",student_view[i].gender);
+printf("Contact No : %s  || ",student_view[i].contact_number);
+printf("Adress : %s  || ",student_view[i].address);
+printf("Class : %s  || ",student_view[i].class_name);
+printf("Group : %s  || ",student_view[i].group_name);
+printf("Academic year : %d  || ",student_view[i].academic_year);
+
+printf("\n------------------------------------------------------------------------------------------------------------------------\n");
+printf("------------------------------------------------------------------------------------------------------------------------\n");
+
+    }
+}
 
 int main() {
 int choice;
-
+int count=0;
+int capacity=2;
+Student *student=malloc(capacity*sizeof(Student));
+ 
     do
     {
     printf("1. Add Student\n");
@@ -124,12 +205,13 @@ int choice;
     printf("Enter your choice: ");
     scanf("%d", &choice);
 
-         switch(choice) {
+    switch(choice) {
         case 1:
-            Add_Student(&student);
+            Add_Student(student,&capacity,&count);
             break;
         case 2:
-           view_all_students(student);
+        printf("Total student : %d \n",count);
+           view_all_students(student,count);
             break;
         case 3:
           
@@ -165,8 +247,9 @@ int choice;
             printf("Invalid choice. Please try again.\n");
     }
 
-        
     } while (choice != 0);
 
+    
+free(student);
     return 0;
 }
